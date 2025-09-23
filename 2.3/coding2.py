@@ -14,3 +14,15 @@ Judge 4: 8.5
 Judge 5: 9
 Your Olympic score is 8.0
 """
+
+print("The judges will now write their score:")
+
+score1 = int(input())
+score2 = int(input())
+score3 = int(input())
+score4 = int(input())
+score5 = int(input())
+
+avg = (score1 + score2 + score3 + score4 + score5) / 5
+
+print("The score is: " + str(avg))
