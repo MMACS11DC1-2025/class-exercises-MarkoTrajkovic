@@ -6,16 +6,29 @@ You must use user input to add interactivity to the program.
 You must design your algorithm in English first, then translate it to Python code.
 Test as you go! Describe in your comments what steps you took to test your code.
 """
-#my program will use data from the class and find the classes favourite sport and how popular it is in a percentage, and the total average
-#of the classes favouite digits.
+#my program will use data from the class to find others with the same favourite sport as you, and the total average of everyones
+#favourite digit.
 
-file = open(responses.csv)
+#information from file
+file = open("2.4/responses.csv")
 
-print("What is your name?")
+#finds name of user
+print("What is your name? Include proper capitalization.")
 name = input()
 
+#matches name with dataset and tells favourite sport
 for line in file:
     if name in line:
-        users_fav = line.split(",")
-        print("Hello, " + name + ". Your favourite sport is " + line[4] + ". Do you want to know the favourite of the class?")
+        user_fav = line.split(",")
+        print("Hello, " + name + ". Your favourite sport to play is " + user_fav[5] + ". Who would you like to know their favourite sport to watch?")
+        answer = input()
+
+#matches other persons name with data set, tells favourite sport to watch
+for line in file:
+    if answer in line:
+        person_fav = line.split(",")
+        print(person_fav[1] + "'s favourite sport to watch is " + person_fav[6] + ".")
+
+    
+    
 
