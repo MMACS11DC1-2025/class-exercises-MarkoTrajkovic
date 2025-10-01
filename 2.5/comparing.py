@@ -20,15 +20,33 @@ name = input()
 for line in file:
     if name in line:
         user_fav = line.split(",")
-        print("Hello, " + name + ". Your favourite sport to play is " + user_fav[5] + ". Who would you like to know their favourite sport to watch?")
-        answer = input()
+        print("Hello, " + name + ". Your favourite sport to play is " + user_fav[5] + ".\n")
+
+file = open("2.4/responses.csv")
+
+print("Who would you like to know their favourite sport?")
+answer = input()
 
 #matches other persons name with data set, tells favourite sport to watch
+
 for line in file:
+    person_fav = line.split(",")
     if answer in line:
-        person_fav = line.split(",")
         print(person_fav[1] + "'s favourite sport to watch is " + person_fav[6] + ".")
+        print("Do you know who else likes to watch " + person_fav[6] + "?\n")
+        answer = input()
+for line in file:
+    person_fav = line.split(",")
+    if str(person_fav[6]) in line:
+            print(person_fav[1] + " also likes to watch " + person_fav[6])
+        
+            
 
     
+
+
+
+
+
     
 
