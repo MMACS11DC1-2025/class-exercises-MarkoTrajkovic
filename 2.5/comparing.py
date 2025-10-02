@@ -12,33 +12,39 @@ Test as you go! Describe in your comments what steps you took to test your code.
 #information from file
 file = open("2.4/responses.csv")
 
+similarsport = 0
+
 #finds name of user
-print("What is your name? Include proper capitalization.")
-name = input()
+print("What is your name?")
+name = input().lower()
 
 #matches name with dataset and tells favourite sport
 for line in file:
-    if name in line:
-        user_fav = line.split(",")
+    user_fav = line.split(",")
+    person_fav = line.split(",")
+    if name in line.lower():
         print("Hello, " + name + ". Your favourite sport to play is " + user_fav[5] + ".\n")
+    else:
+        continue
 
-file = open("2.4/responses.csv")
+    print("Who would you like to know their favourite sport?")
+    file = open("2.4/responses.csv")
+    
+for line in file:
+    user_fav = line.split(",")
+    answer = input().lower()
+    if answer in line.lower():
+        print(user_fav[1] + "'s favourite sport to watch is " + user_fav[6] + ".")
+        print("Do you know how many people also like to watch " + user_fav[6] + "?\n")
+    answer2 = input()
+    if answer2 == "yes":
+        file = open("2.4/responses.csv")
+        if str(person_fav[6]) in line:
+            similarsport += 1
+            print("Exactly " + str(similarsport) + " people like to watch that!")
 
-print("Who would you like to know their favourite sport?")
-answer = input()
 
 #matches other persons name with data set, tells favourite sport to watch
-
-for line in file:
-    person_fav = line.split(",")
-    if answer in line:
-        print(person_fav[1] + "'s favourite sport to watch is " + person_fav[6] + ".")
-        print("Do you know who else likes to watch " + person_fav[6] + "?\n")
-        answer = input()
-for line in file:
-    person_fav = line.split(",")
-    if str(person_fav[6]) in line:
-            print(person_fav[1] + " also likes to watch " + person_fav[6])
         
             
 
