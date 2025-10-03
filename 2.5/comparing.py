@@ -27,24 +27,30 @@ for line in file:
     else:
         continue
 
-    print("Who would you like to know their favourite sport?")
-    file = open("2.4/responses.csv")
+print("Who would you like to know their favourite sport?")
+answer = input().lower()
+file = open("2.4/responses.csv")
     
 for line in file:
     user_fav = line.split(",")
-    answer = input().lower()
     if answer in line.lower():
+        file = open("2.4/responses.csv")
         print(user_fav[1] + "'s favourite sport to watch is " + user_fav[6] + ".")
-        print("Do you know how many people also like to watch " + user_fav[6] + "?\n")
-    answer2 = input()
+
+print("Do you know how many people also like to watch or play that?")
+answer2 = input().lower()
+    
+for line in file:
     if answer2 == "yes":
         file = open("2.4/responses.csv")
-        if str(person_fav[6]) in line:
+        if str(user_fav[6]) in line:
             similarsport += 1
-            print("Exactly " + str(similarsport) + " people like to watch that!")
-
-
+print("Exactly " + str(similarsport) + " people like to watch and/or play " + user_fav[6] + "!")
 #matches other persons name with data set, tells favourite sport to watch
+if similarsport >= 5:
+    print("Wow! Thats a popular sport!")
+elif similarsport < 5:
+    print("Not a very popular sport. " + answer + " likes a niche sport!")
         
             
 
