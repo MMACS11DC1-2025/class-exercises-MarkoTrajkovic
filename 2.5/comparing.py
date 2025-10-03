@@ -1,14 +1,8 @@
-"""
-Create a program that uses counting and comparison operators (< > <= >=).
-You must use the class' datafile, 'responses.csv' and analyze it
-    to make at least 2 interesting observations.
-You must use user input to add interactivity to the program.
-You must design your algorithm in English first, then translate it to Python code.
-Test as you go! Describe in your comments what steps you took to test your code.
-"""
-#my program will use data from the class to find others with the same favourite sport as you, and the total average of everyones
-#favourite digit.
-
+'''
+my program will use data from the class to your name, favourite sport, and someone elses
+favourite sport of your choice. Then, it will find how many other people like that sport
+and respond to the user depending on how many people like the sport.
+'''
 #information from file
 file = open("2.4/responses.csv")
 
