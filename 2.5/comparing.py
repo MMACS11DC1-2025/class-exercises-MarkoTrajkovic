@@ -30,6 +30,7 @@ for line in file:
     if answer in line.lower():
         file = open("2.4/responses.csv")
         print(user_fav[1] + "'s favourite sport to watch is " + user_fav[6] + ".")
+        break
 
 print("Do you know how many people also like to watch or play that?")
 answer2 = input().lower()
