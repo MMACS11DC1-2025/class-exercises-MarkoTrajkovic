@@ -13,4 +13,12 @@ repeat itself until the base case is met. The last thing i did was call the func
 TESTING + DOCUMENTATION:
 I tested the size of the shape by running the code 5 times to see if the pattern got bigger every increase of the desired size. I did the same with the color, testing all 5 of the avilable
 colors to see if they visually changed. I tested the number of recursions my setting size to a constant divisible by 10, and doing easy math to check if the function worked. Since the size
-decreased by 0.75, there should be 1.25 more recurions than the size. I tested the size to be 30 and got
+decreased by 0.75, there should be 1.25 more recurions than the size. I tested the size to be 30 and got 40, so i know it is right. 
+![alt text](image.png)
+I tested all of the colors and shapes by choosing all of them once and running the code to see if it worked, here is an example of a medium shape with a magenta color.
+![alt text](image-1.png)
+
+CHALLENGES:
+Some challenges i experienced were the text telling you how many recursions there were displaying only 0, and i realized that
+that was because whenever the function recursed, the variable reset to zero. I tryed putting the variable outside of the function, but then it didnt recognize it as it wasnt a local variable anymore. Finally, i made it a parameter of the function,
+defining the variable and also not reseting it when the function recurses. Another major challenged i faced was implementing the color. I originally couldnt figure out how to implement color in Turtle code, until i reviewed the notes. I then had trouble with using the dict i made for the color and the input from the user to change the color when the user says so. I managed to figure it out and fit them all in one line.
