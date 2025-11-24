@@ -1,5 +1,8 @@
-from PIL import Image
+import time
+t0 = time.time()
 
+from PIL import Image
+t1 = time.time()
 def colour(r, g, b):
     if r > 150 and g > 150 and b < 150:
         return "yellow"
@@ -12,11 +15,12 @@ def colour(r, g, b):
     elif r < 209 and g < 24 and b < 171:
         return "purple"
     
-    
 file = Image.open("5.1/jelly_beans.jpg")
 jb_image = file.load()
 
 yellow_pixels = []
+t2 = time.time()
+
 red_p = []
 blue_p = []
 green_p = []
@@ -41,6 +45,7 @@ for x in range(width):
             green_p.append(jb_image[x,y])
         if colour(pixel_r, pixel_g, pixel_b) == "purple":
             purple_p.append(jb_image[x,y])
+        t3 = time.time()
 
 num_yellow = len(yellow_pixels)
 total_pixels = width*height
@@ -74,3 +79,12 @@ output_purple = "There are {:.2f}% purple pixels".format(purple_percent)
 print(output_purple)
 
 file.save("output.png", "png")
+
+start_time = t0
+import_time = t1 - t0
+file_load_time = t2 - t1
+pixel_scan_time = t3 - t2
+total_time = t3 - t0
+
+timings = "It took {:.2f} seconds to import PIL, {:.2f} seconds to load the file, {:.2f} seconds to scan every pixel and {:.2f} seconds in total.".format(import_time, file_load_time, pixel_scan_time, total_time)
+print(timings)
