@@ -3,7 +3,7 @@ def is_flag(r, g, b):
         return "white"
     elif 100 <= r <= 255 and 0 <= g <= 120 and 0 <= b <= 120:
         return "red"
-    elif 40 <= r <= 150 and 0 <= g <= 100 and 100 <= b <= 255:
+    elif 0 <= r <= 100 and 0 <= g <= 100 and 0 <= b <= 255:
         return "blue"
     else:
         return "other"

@@ -1,8 +1,11 @@
 from PIL import Image
 import is_flag
+import math
+import time
 
-image = Image.open("6.7/americanflag4.jpg").load()
-image_output = Image.open("6.7/americanflag4.jpg")
+start = time.time()
+image = Image.open("6.7/americanflag6.jpg").load()
+image_output = Image.open("6.7/americanflag6.jpg")
 
 width = image_output.width
 height = image_output.height
@@ -31,17 +34,22 @@ for i in range(width):
 
 total_pixels = height*width - len(other_pixels)
 
-red_pixel_percent = len(red_pixels)/total_pixels * 100
-blue_pixel_percent = len(blue_pixels)/total_pixels * 100
-white_pixel_percent = len(white_pixels)/total_pixels * 100
+red_pixel_percent = math.ceil(len(red_pixels)/total_pixels * 100)
+blue_pixel_percent = math.ceil(len(blue_pixels)/total_pixels * 100)
+white_pixel_percent = math.ceil(len(white_pixels)/total_pixels * 100)
 
 print(red_pixel_percent)
 print(blue_pixel_percent)
 print(white_pixel_percent)
 
-if 30 < white_pixel_percent < 40:
-    if 30 < red_pixel_percent < 40:
-        if 15 < blue_pixel_percent < 35:
+if 50 <= white_pixel_percent <= 70:
+    if 25 <= red_pixel_percent <= 60:
+        if 10 <= blue_pixel_percent <= 30:
             print("There is an american flag.")
 else:
     print("There is no american flag.")
+
+end = time.time()
+total_time = end - start
+
+print("{:.3f}".format(total_time))
