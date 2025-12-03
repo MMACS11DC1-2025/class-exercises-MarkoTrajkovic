@@ -52,4 +52,4 @@ else:
 end = time.time()
 total_time = end - start
 
-print("{:.3f}".format(total_time))
+print("It took {:.3f} seconds for the code to run".format(total_time))
