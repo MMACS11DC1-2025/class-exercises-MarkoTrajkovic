@@ -102,13 +102,21 @@ def search(probabilities):
 
 sorted_list = search(probability)
 
-def binary(sorted_list, query):
+def binary(list, query):
     start = 0
-    end = len(sorted_list)-1
+    end = len(list)-1
 
     while start <= end:
         middle = int((start+end)/2)
-        if sorted_list[]
+        if list[middle][0] == query:
+            print(query + 1)
+        elif list[middle][0] > query:
+            end = middle-1
+        else:
+            start = middle + 1
+    return -1
+binary(sorted_list, 94.14)
+
 
 
     
