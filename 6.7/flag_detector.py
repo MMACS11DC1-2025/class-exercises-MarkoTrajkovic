@@ -5,6 +5,7 @@ import time
 
 images = []
 images_raw = []
+probability = []
 
 start = time.time()
 
@@ -14,7 +15,8 @@ images2 = ["6.7/americanflag1.jpg",
     "6.7/americanflag3.webp",
     "6.7/americanflag4.jpg",
     "6.7/americanflag5.jpg",
-    "6.7/americanflag6.jpg"]
+    "6.7/americanflag6.jpg",
+    "6.7/serbianflag.webp"]
 
 for a in images2:
     img_raw = Image.open(a)
@@ -71,9 +73,43 @@ for x in range(len(images_raw)):
     print("White:", white_percent)
 
 
+
     pixel_percent = (counter/total_pixels)*100
+    probability.append(pixel_percent)
 
     print(pixel_percent)
+    if pixel_percent >= 90:
+        print("This is most likely an american, russian or french flag.")
+    elif pixel_percent >= 60:
+        print("There might be an american, russian or french flag.")
+    elif pixel_percent >= 30:
+        print("It is unlikely there is an american, russian or french flag.")
+    else:
+        print("There is no american, russian or french flag.")
+
+def search(probabilities):
+    for i in range(len(probabilities)):
+        smallest_score = probabilities[i]
+        smallest_index = i
+
+        for j in range(i+1, len(probabilities)):
+            if probabilities[j] < smallest_score:
+                smallest_score = probabilities[j]
+                smallest_index = j
+        probabilities[smallest_index], probabilities[i] = probabilities[i], probabilities[smallest_index]
+        top_five = probabilities[-5:]
+        print(top_five)
+
+sorted_list = search(probability)
+
+def binary(sorted_list, query):
+    start = 0
+    end = len(sorted_list)-1
+
+    while start <= end:
+        middle = int((start+end)/2)
+        if sorted_list[]
+
 
     
 
