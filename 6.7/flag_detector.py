@@ -98,24 +98,31 @@ def search(probabilities):
                 smallest_index = j
         probabilities[smallest_index], probabilities[i] = probabilities[i], probabilities[smallest_index]
         top_five = probabilities[-5:]
-        print(top_five)
+        return top_five
 
 sorted_list = search(probability)
 
 def binary(list, query):
     start = 0
     end = len(list)-1
+    target_score_min = query - 5
+    target_score_max = query + 5
+
 
     while start <= end:
+        print(list)
         middle = int((start+end)/2)
-        if list[middle][0] == query:
-            print(query + 1)
-        elif list[middle][0] > query:
+        if list[middle] >= target_score_min and list[middle] <= target_score_max:
+            return list[middle], images2[middle]
+        elif list[middle] > query:
             end = middle-1
         else:
             start = middle + 1
     return -1
-binary(sorted_list, 94.14)
+
+
+
+print(binary(sorted_list, 94.14))
 
 
 
