@@ -1,15 +1,19 @@
+#import everything I will need, math is for ceil function, which rounds up to the nearest whole number
 from PIL import Image
 import is_flag
 import math
 import time
 
+#initializing list variables
 images = []
 images_raw = []
 probability = []
+paired_data = []
 
+#start a timer for profiling
 start = time.time()
 
-# Load all images
+#make a list of all images
 images2 = ["6.7/americanflag1.jpg",
     "6.7/americanflag2.webp",
     "6.7/americanflag3.webp",
@@ -18,25 +22,27 @@ images2 = ["6.7/americanflag1.jpg",
     "6.7/americanflag6.jpg",
     "6.7/serbianflag.webp"]
 
+#loads images and adds unloaded and loaded images to seperate lists
 for a in images2:
     img_raw = Image.open(a)
     images_raw.append(img_raw)
     images.append(img_raw.load())
 
-
+#goes through all the images and notes the width and height of each image
 for x in range(len(images_raw)):
-    count = 0
     counter = 0
-    img_raw = images_raw[x]   # actual image object
+    img_raw = images_raw[x]   
     img = images[x]
 
     width, height = img_raw.width, img_raw.height
 
+    #initialize more lists
     blue_pixels = []
     red_pixels = []
     white_pixels = []
     other_pixels = []
 
+    #goes through every pixel and appends them to the list of their color
     for i in range(width):
         for j in range(height):
 
@@ -44,6 +50,7 @@ for x in range(len(images_raw)):
 
             color = is_flag.is_flag(r, g, b)
 
+            #counter goes up by one if there is an american french or russian flag color and down if there is another color. This is used later for finding flag probability.
             if color == "blue":
                 blue_pixels.append((r, g, b))
                 counter += 1
@@ -57,26 +64,31 @@ for x in range(len(images_raw)):
                 other_pixels.append((r, g, b))
                 counter -= 1
 
+    #takes the width and height from every image. This is to prevent an out of bounds value.
     total_pixels = width * height
 
+    #Error control, if there are no pixels (no image) the program will skip that file.
     if total_pixels == 0:
         print("Image", x+1, ": Cannot calculate (no valid pixels)")
         continue
 
+    #find the approximate percentage of the image that are the correct colors.
     red_percent = math.ceil(len(red_pixels) / total_pixels * 100)
     blue_percent = math.ceil(len(blue_pixels) / total_pixels * 100)
     white_percent = math.ceil(len(white_pixels) / total_pixels * 100)
 
+    #prints every image with the corresponding color percentage.
     print("Image", x+1)
     print("Red:", red_percent)
     print("Blue:", blue_percent)
     print("White:", white_percent)
 
-
-
+    #find the percent chance of the flag matching criteria, and appends a list of percentages and a list of percentages plus the image counterpart
     pixel_percent = (counter/total_pixels)*100
+    paired_data.append((pixel_percent, images2[x]))
     probability.append(pixel_percent)
 
+    #will respond to each image depending on the probability of a flag.
     print(pixel_percent)
     if pixel_percent >= 90:
         print("This is most likely an american, russian or french flag.")
@@ -87,46 +99,55 @@ for x in range(len(images_raw)):
     else:
         print("There is no american, russian or french flag.")
 
+#selection sort algorithm, keeps finding the highest percentage in the list and putting it at the start until the list is highest to lowest.
 def search(probabilities):
     for i in range(len(probabilities)):
-        smallest_score = probabilities[i]
-        smallest_index = i
+        highest_score = probabilities[i]
+        highest_index = i
 
-        for j in range(i+1, len(probabilities)):
-            if probabilities[j] < smallest_score:
-                smallest_score = probabilities[j]
-                smallest_index = j
-        probabilities[smallest_index], probabilities[i] = probabilities[i], probabilities[smallest_index]
-        top_five = probabilities[-5:]
-        return top_five
+        for j in range(i + 1, len(probabilities)):
+            if probabilities[j] > highest_score:
+                highest_score = probabilities[j]
+                highest_index = j
+        
+        probabilities[highest_index], probabilities[i] = probabilities[i], probabilities[highest_index]
+    return probabilities[:5]
 
-sorted_list = search(probability)
+#makes a variable for the sorted percentages and the image counterpart, and a variable for just the sorted percentages.
+sorted_list = search(paired_data)
+sorted_probs = search(probability)
 
+#binary search, will divide the list in half until it finds a percentage that matches with a user input, within a margin of 0.5%
 def binary(list, query):
     start = 0
     end = len(list)-1
-    target_score_min = query - 5
-    target_score_max = query + 5
-
+    target_score_min = query - 0.5
+    target_score_max = query + 0.5
 
     while start <= end:
-        print(list)
         middle = int((start+end)/2)
-        if list[middle] >= target_score_min and list[middle] <= target_score_max:
-            return list[middle], images2[middle]
+        score, img = sorted_list[middle]
+        if target_score_min <= list[middle][0] <= target_score_max:
+            return score, img
         elif list[middle] > query:
             end = middle-1
         else:
             start = middle + 1
     return -1
 
-
-
-print(binary(sorted_list, 94.14))
+#prints the top 5 most likely percentages, then asks the user to pick one of them. Then the program uses the binary search to give back the percentage and image of the percentage the user chooses.
+#makes a new timer to subtract the pause time between the user input from the total time.
+print("The top 5 most likely percentages are:")
+print(sorted_probs)
+pause_start = time.time()
+answer = float(input("Type in a percentage out of these, and I will give you the image. (Within a margin of 0.5%)"))
+pause_end = time.time()
+print(binary(sorted_list, answer))
 
 
 
     
-
+#ends the timer initialized at the start, then prints the time for the entire code to run. Also removes the time the user took to input a number.
 end = time.time()
-print("It took {:.3f} seconds to run".format(end - start))
+pause = pause_end - pause_start
+print("It took {:.3f} seconds to run".format(end - start - pause))
