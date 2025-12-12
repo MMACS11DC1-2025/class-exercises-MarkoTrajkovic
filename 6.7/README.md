@@ -1,0 +1,1 @@
+My program will detect if an image has the american flag on it. If around 25-50% of the image is red, and 25-50% of the flag is white, and around 10-30% of the image is blue. My program will take the average of the blue, white and red pixels
