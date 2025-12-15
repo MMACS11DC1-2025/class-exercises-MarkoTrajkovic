@@ -133,7 +133,7 @@ def binary(list, query):
     while start <= end:
         #cuts the list in half and checks the middle.
         middle = int((start+end)/2)
-        score, img = sorted_list[middle]
+        score, img = list[middle]
         #if the middle of the list includes the thing the user is seaching for, return that number and picture.
         if target_score_min <= list[middle][0] <= target_score_max:
             return score, img
