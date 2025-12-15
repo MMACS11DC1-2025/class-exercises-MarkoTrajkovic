@@ -20,7 +20,9 @@ images2 = ["6.7/americanflag1.jpg",
     "6.7/americanflag4.jpg",
     "6.7/americanflag5.jpg",
     "6.7/americanflag6.jpg",
-    "6.7/serbianflag.webp"]
+    "6.7/serbianflag.webp",
+    "6.7/americanflag7.jpg",
+    "6.7/frenchflag.png"]
 
 #loads images and adds unloaded and loaded images to seperate lists
 for a in images2:
@@ -105,12 +107,15 @@ def search(probabilities):
         highest_score = probabilities[i]
         highest_index = i
 
+        #if the next number is bigger than the previous number, that becomes the new biggest number.
         for j in range(i + 1, len(probabilities)):
             if probabilities[j] > highest_score:
                 highest_score = probabilities[j]
                 highest_index = j
         
+        #replaces the highest number with the place of the highest number.
         probabilities[highest_index], probabilities[i] = probabilities[i], probabilities[highest_index]
+    #returns the top 5 highest numbers.
     return probabilities[:5]
 
 #makes a variable for the sorted percentages and the image counterpart, and a variable for just the sorted percentages.
@@ -121,26 +126,31 @@ sorted_probs = search(probability)
 def binary(list, query):
     start = 0
     end = len(list)-1
+    #lets the number inputted by the user sway by 0.5
     target_score_min = query - 0.5
     target_score_max = query + 0.5
 
     while start <= end:
+        #cuts the list in half and checks the middle.
         middle = int((start+end)/2)
         score, img = sorted_list[middle]
+        #if the middle of the list includes the thing the user is seaching for, return that number and picture.
         if target_score_min <= list[middle][0] <= target_score_max:
             return score, img
-        elif list[middle] > query:
+        #if it is bigger or smaller than what the user put, takes the number under/over that and finds the middle between that number and the other number.
+        elif list[middle][0] > query:
             end = middle-1
         else:
             start = middle + 1
-    return -1
+    #if there is no match the program will say this.
+    return "Sorry, there is no image with a percentage like that."
 
 #prints the top 5 most likely percentages, then asks the user to pick one of them. Then the program uses the binary search to give back the percentage and image of the percentage the user chooses.
 #makes a new timer to subtract the pause time between the user input from the total time.
 print("The top 5 most likely percentages are:")
 print(sorted_probs)
 pause_start = time.time()
-answer = float(input("Type in a percentage out of these, and I will give you the image. (Within a margin of 0.5%)"))
+answer = float(input("Type in a percentage out of these, and I will give you the image. (Please round to the nearest decimal place.) "))
 pause_end = time.time()
 print(binary(sorted_list, answer))
 
