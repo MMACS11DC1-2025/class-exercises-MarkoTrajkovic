@@ -22,7 +22,8 @@ images2 = ["6.7/americanflag1.jpg",
     "6.7/americanflag6.jpg",
     "6.7/serbianflag.webp",
     "6.7/americanflag7.jpg",
-    "6.7/frenchflag.png"]
+    "6.7/frenchflag.png",
+    "6.7/russianflag.webp"]
 
 #loads images and adds unloaded and loaded images to seperate lists
 for a in images2:
@@ -37,6 +38,7 @@ for x in range(len(images_raw)):
     img = images[x]
 
     width, height = img_raw.width, img_raw.height
+    print(width)
 
     #initialize more lists
     blue_pixels = []
@@ -102,6 +104,7 @@ for x in range(len(images_raw)):
         print("There is no american, russian or french flag.")
 
 #selection sort algorithm, keeps finding the highest percentage in the list and putting it at the start until the list is highest to lowest.
+start_search = time.time()
 def search(probabilities):
     for i in range(len(probabilities)):
         highest_score = probabilities[i]
@@ -117,12 +120,14 @@ def search(probabilities):
         probabilities[highest_index], probabilities[i] = probabilities[i], probabilities[highest_index]
     #returns the top 5 highest numbers.
     return probabilities[:5]
+end_search = time.time()
 
 #makes a variable for the sorted percentages and the image counterpart, and a variable for just the sorted percentages.
 sorted_list = search(paired_data)
 sorted_probs = search(probability)
 
 #binary search, will divide the list in half until it finds a percentage that matches with a user input, within a margin of 0.5%
+start_binary = time.time()
 def binary(list, query):
     start = 0
     end = len(list)-1
@@ -144,20 +149,25 @@ def binary(list, query):
             start = middle + 1
     #if there is no match the program will say this.
     return "Sorry, there is no image with a percentage like that."
+end_binary = time.time()
 
 #prints the top 5 most likely percentages, then asks the user to pick one of them. Then the program uses the binary search to give back the percentage and image of the percentage the user chooses.
 #makes a new timer to subtract the pause time between the user input from the total time.
 print("The top 5 most likely percentages are:")
 print(sorted_probs)
+
 pause_start = time.time()
 answer = float(input("Type in a percentage out of these, and I will give you the image. (Please round to the nearest decimal place.) "))
 pause_end = time.time()
+pause = pause_end - pause_start
+
 print(binary(sorted_list, answer))
+print(end_binary - start_binary)
+print(end_search - start_search)
 
 
 
     
 #ends the timer initialized at the start, then prints the time for the entire code to run. Also removes the time the user took to input a number.
 end = time.time()
-pause = pause_end - pause_start
 print("It took {:.3f} seconds to run".format(end - start - pause))
