@@ -38,7 +38,6 @@ for x in range(len(images_raw)):
     img = images[x]
 
     width, height = img_raw.width, img_raw.height
-    print(width)
 
     #initialize more lists
     blue_pixels = []
@@ -139,9 +138,11 @@ def binary(list, query):
         #cuts the list in half and checks the middle.
         middle = int((start+end)/2)
         score, img = list[middle]
+        print(list[middle])
         #if the middle of the list includes the thing the user is seaching for, return that number and picture.
         if target_score_min <= list[middle][0] <= target_score_max:
-            return score, img
+            print(list[middle])
+            return list[middle][0]
         #if it is bigger or smaller than what the user put, takes the number under/over that and finds the middle between that number and the other number.
         elif list[middle][0] > query:
             end = middle-1
