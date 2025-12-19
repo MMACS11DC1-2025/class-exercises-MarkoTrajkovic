@@ -65,7 +65,7 @@ for x in range(len(images_raw)):
                 other_pixels.append((r, g, b))
                 counter -= 1
 
-    #error control, 
+    #error control, if the pixels are zero the program will continue anyway.
     total_pixels = width * height
     if total_pixels == 0:
         continue
@@ -75,6 +75,7 @@ for x in range(len(images_raw)):
     blue_percent = math.ceil(len(blue_pixels) / total_pixels * 100)
     white_percent = math.ceil(len(white_pixels) / total_pixels * 100)
 
+    #displays the image number, The percentage of the image that is red, blue and white, and the likeleness of the image being a flag.
     print("Image", x + 1)
     print("Red:", red_percent)
     print("Blue:", blue_percent)
@@ -85,6 +86,8 @@ for x in range(len(images_raw)):
     probability.append(pixel_percent)
 
     print(pixel_percent)
+
+    #The program will respond accordingly depending on the pixel percent
     if pixel_percent >= 90:
         print("This is most likely an american, russian or french flag.")
     elif pixel_percent >= 60:
@@ -95,6 +98,7 @@ for x in range(len(images_raw)):
         print("There is no american, russian or french flag.")
 
 # ---------------- SELECTION SORT (ASCENDING) ----------------
+#ascending sort only for binary search
 def selection_sort_ascending(data):
     data = data[:]  # copy list
     for i in range(len(data)):
@@ -106,6 +110,7 @@ def selection_sort_ascending(data):
     return data
 
 # ---------------- SELECTION SORT (DESCENDING) ----------------
+#descending sort for the display of the top 5 percentages.
 def selection_sort_descending(data):
     data = data[:]
     for i in range(len(data)):
@@ -127,6 +132,7 @@ for item in top_5:
     print(item)
 
 # ---------------- BINARY SEARCH ----------------
+#splits the list in half until it finds the query given by the user.
 def binary(data, query):
     start = 0
     end = len(data) - 1
@@ -147,10 +153,12 @@ def binary(data, query):
 
     return "Sorry, there is no image with a percentage like that."
 
+#user input for the binary search
 pause_start = time.time()
 answer = float(input("Type one of the top percentages: "))
 pause_end = time.time()
 
+#print the image that has the same percentage as the user input.
 print(binary(paired_data_sorted, answer))
 
 end = time.time()
